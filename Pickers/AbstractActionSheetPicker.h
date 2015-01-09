@@ -56,6 +56,7 @@ static NSString *const kActionTarget  = @"buttonActionTarget";
 @interface AbstractActionSheetPicker : NSObject<UIPopoverControllerDelegate>
 @property (nonatomic, strong) UIToolbar* toolbar;
 @property (nonatomic, copy) NSString *title;
+@property (nonatomic, retain) UIView *masterView;
 @property (nonatomic, strong) UIView *pickerView;
 @property (nonatomic, readonly) CGSize viewSize;
 @property (nonatomic, strong) NSMutableArray *customButtons;
