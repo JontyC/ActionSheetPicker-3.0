@@ -172,35 +172,35 @@ CG_INLINE BOOL isIPhone4()
 
 - (void)showActionSheetPicker
 {
-    UIView *masterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.viewSize.width, 260)];
+    self.masterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.viewSize.width, 260)];
 
     // to fix bug, appeared only on iPhone 4 Device: https://github.com/skywinder/ActionSheetPicker-3.0/issues/5
     if ( isIPhone4() )
     {
-        masterView.backgroundColor = [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1.0];
+        self.masterView.backgroundColor = [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1.0];
     }
     self.toolbar = [self createPickerToolbarWithTitle:self.title];
-    [masterView addSubview:self.toolbar];
+    [self.masterView addSubview:self.toolbar];
 
     //ios7 picker draws a darkened alpha-only region on the first and last 8 pixels horizontally, but blurs the rest of its background.  To make the whole popup appear to be edge-to-edge, we have to add blurring to the remaining left and right edges.
     if ( NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_6_1 )
     {
-        CGRect f = CGRectMake(0, self.toolbar.frame.origin.y, 8, masterView.frame.size.height - self.toolbar.frame.origin.y);
+        CGRect f = CGRectMake(0, self.toolbar.frame.origin.y, 8, self.masterView.frame.size.height - self.toolbar.frame.origin.y);
         UIToolbar *leftEdge = [[UIToolbar alloc] initWithFrame:f];
-        f.origin.x = masterView.frame.size.width - 8;
+        f.origin.x = self.masterView.frame.size.width - 8;
         UIToolbar *rightEdge = [[UIToolbar alloc] initWithFrame:f];
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "UnavailableInDeploymentTarget"
         leftEdge.barTintColor = rightEdge.barTintColor = self.toolbar.barTintColor;
 #pragma clang diagnostic pop
-        [masterView insertSubview:leftEdge atIndex:0];
-        [masterView insertSubview:rightEdge atIndex:0];
+        [self.masterView insertSubview:leftEdge atIndex:0];
+        [self.masterView insertSubview:rightEdge atIndex:0];
     }
 
     self.pickerView = [self configuredPickerView];
     NSAssert(_pickerView != NULL, @"Picker view failed to instantiate, perhaps you have invalid component data.");
-    [masterView addSubview:_pickerView];
-    [self presentPickerForView:masterView];
+    [self.masterView addSubview:_pickerView];
+    [self presentPickerForView:self.masterView];
 }
 
 - (IBAction)actionPickerDone:(id)sender
